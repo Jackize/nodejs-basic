@@ -6,6 +6,13 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 8080;
 
+//config server to post data
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 // setup view engine
 configViewEngine(app);
 //init web route
