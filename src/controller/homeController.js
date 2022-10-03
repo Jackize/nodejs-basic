@@ -1,17 +1,15 @@
 import connection from "../configs/connectDB";
 
-export let getHomePage = (req, res) => {
-  let data = [];
-  connection.query("SELECT * FROM `users` ", function (err, results, fields) {
-    results.map((row) => {
-      data.push({
-        id: row.id,
-        firstName: row.firstName,
-        lastName: row.lastName,
-        email: row.email,
-        address: row.address,
-      });
-    });
-    return res.render("./index.ejs", { dataUser: data });
-  });
+export let getHomePage = async (req, res) => {
+  const [rows, fields] = await connection.execute("SELECT * FROM users");
+  return res.render("./index.ejs", { dataUser: rows });
+};
+
+export let getDetailPage = async (req, res) => {
+  let userId = req.params.userId;
+  let [user] = await connection.execute(`SELECT * FROM users WHERE id = ?`, [
+    userId,
+  ]);
+  console.log(user);
+  return res.send(JSON.stringify(user));
 };
