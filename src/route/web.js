@@ -3,17 +3,20 @@ import {
   getHomePage,
   getDetailPage,
   createNewUser,
+  deleteUser,
+  editUser,
+  updateUser,
 } from "../controller/homeController";
 
 let router = express.Router();
 
 const initWebRoute = (app) => {
   router.get("/", getHomePage);
-  router.get("/about", (req, res) => {
-    res.send(`I'm Eric!`);
-  });
   router.get("/detail/user/:userId", getDetailPage);
   router.post("/create-new-user", createNewUser);
+  router.post("/delete-user", deleteUser);
+  router.get("/edit-user/:id", editUser);
+  router.post("/update-user", updateUser);
   return app.use("/", router);
 };
 
