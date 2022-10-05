@@ -50,3 +50,12 @@ body {
 .update-user-container label{
   display: block;
 }
+
+
+.upload-file-container{
+  padding: 20px;
+}
+
+.upload-file-container label{
+  display: block;
+}
