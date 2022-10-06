@@ -8,6 +8,7 @@ import {
   updateUser,
   getUploadFilePage,
   handleUploadFile,
+  handleUploadMultipleFile,
 } from "../controller/homeController";
 import multer from "multer";
 import path from "path";
@@ -16,7 +17,6 @@ let router = express.Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    console.log(appRoot);
     cb(null, appRoot + "/src/public/img/");
   },
 
@@ -39,6 +39,7 @@ const imageFilter = function (req, file, cb) {
 };
 
 let upload = multer({ storage: storage, fileFilter: imageFilter });
+
 const initWebRoute = (app) => {
   router.get("/", getHomePage);
   router.get("/detail/user/:userId", getDetailPage);
@@ -51,6 +52,11 @@ const initWebRoute = (app) => {
     "/uploadProfilePicture",
     upload.single("profile_pic"),
     handleUploadFile
+  );
+  router.post(
+    "/upload-multiple-images",
+    upload.array("multiple_images"),
+    handleUploadMultipleFile
   );
   return app.use("/", router);
 };
